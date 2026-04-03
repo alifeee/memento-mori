@@ -782,6 +782,7 @@ class InstagramDataLoader:
     def load_all_data(
         self,
         top_n_posts=-1,
+        load_stories=True,
     ):
         """
         Load all data and return a comprehensive data package.
@@ -792,8 +793,8 @@ class InstagramDataLoader:
         profile_info = self.load_profile_data()
         location_info = self.load_location_data()
         posts_data = self.extract_relevant_data()
-        stories_data = self.load_stories_data()
         follower_count = self.load_followers_data()
+        stories_data = self.load_stories_data() if load_stories else {}
         
         # Add follower count to profile info
         profile_info["follower_count"] = follower_count

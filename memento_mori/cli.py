@@ -49,6 +49,12 @@ def main():
         help="How many posts to parse, counted from the most recent. -1 for all. [default: -1]"
     )
     parser.add_argument(
+        "--output-stories",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="Outputs story archive (or not with --no)"
+    )
+    parser.add_argument(
         "--quality",
         type=int,
         default=70,
@@ -144,6 +150,7 @@ def main():
         # Load and process data
         data = loader.load_all_data(
             top_n_posts=args.top_n_posts,
+            load_stories=args.output_stories,
         )
         
         if args.verbose:
