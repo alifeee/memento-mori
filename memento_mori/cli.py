@@ -43,6 +43,18 @@ def main():
         help="Directory to search for Instagram exports when auto-detecting [default: current directory]",
     )
     parser.add_argument(
+        "--top-n-posts",
+        type=int,
+        default=-1,
+        help="How many posts to parse, counted from the most recent. -1 for all. [default: -1]"
+    )
+    parser.add_argument(
+        "--output-stories",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="Outputs story archive (or not with --no)"
+    )
+    parser.add_argument(
         "--quality",
         type=int,
         default=70,
@@ -136,7 +148,10 @@ def main():
         loader = InstagramDataLoader(extraction_dir, file_mapper, verbose=args.verbose)
 
         # Load and process data
-        data = loader.load_all_data()
+        data = loader.load_all_data(
+            top_n_posts=args.top_n_posts,
+            load_stories=args.output_stories,
+        )
         
         if args.verbose:
             print("\n🔍 VERBOSE: Data Loading Details")
@@ -160,6 +175,8 @@ def main():
                     print(f"      {file_type}: {file_path}")
         
         print(f"   Found {data['post_count']} posts from {data['profile']['username']}")
+        if args.top_n_posts != -1: 
+            print(f"   (limited to {args.top_n_posts} posts via argument)")
 
         # Process media files
         print(f"\n🖼️  PROCESSING MEDIA")

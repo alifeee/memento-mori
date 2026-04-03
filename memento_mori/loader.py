@@ -779,7 +779,11 @@ class InstagramDataLoader:
                 traceback.print_exc()
             return {}
 
-    def load_all_data(self):
+    def load_all_data(
+        self,
+        top_n_posts=-1,
+        load_stories=True,
+    ):
         """
         Load all data and return a comprehensive data package.
 
@@ -789,8 +793,8 @@ class InstagramDataLoader:
         profile_info = self.load_profile_data()
         location_info = self.load_location_data()
         posts_data = self.extract_relevant_data()
-        stories_data = self.load_stories_data()
         follower_count = self.load_followers_data()
+        stories_data = self.load_stories_data() if load_stories else {}
         
         # Add follower count to profile info
         profile_info["follower_count"] = follower_count
@@ -800,6 +804,10 @@ class InstagramDataLoader:
         location_info = self.process_json_strings(location_info)
         posts_data = self.process_json_strings(posts_data)
         stories_data = self.process_json_strings(stories_data)
+
+        # truncate posts_data from CLI arg
+        if top_n_posts != -1:
+            posts_data = {k: v for (i, (k, v)) in enumerate(posts_data.items()) if i < top_n_posts}
 
         # Get date range for display
         if posts_data and isinstance(posts_data, dict) and len(posts_data) > 0:
