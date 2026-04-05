@@ -31,3 +31,6 @@ comments-test/
 
 # custom files
 custom.css
+
+# vscode
+.vscode/
