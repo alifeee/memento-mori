@@ -811,10 +811,6 @@ class InstagramDataLoader:
         posts_data = self.process_json_strings(posts_data)
         stories_data = self.process_json_strings(stories_data)
 
-        # truncate posts_data from CLI arg
-        if top_n_posts != -1:
-            posts_data = {k: v for (i, (k, v)) in enumerate(posts_data.items()) if i < top_n_posts}
-
         # Get date range for display
         if posts_data and isinstance(posts_data, dict) and len(posts_data) > 0:
             keys = list(posts_data.keys())
@@ -840,12 +836,18 @@ class InstagramDataLoader:
             if not isinstance(posts_data, dict):
                 posts_data = {}
 
+        # truncate posts_data from CLI arg to be maximum of top_n_posts length
+        post_count = len(posts_data)
+        if top_n_posts != -1:
+            posts_data = {k: v for (i, (k, v)) in enumerate(posts_data.items()) if i < top_n_posts}
+
         return {
             "profile": profile_info,
             "location": location_info,
             "posts": posts_data,
             "stories": stories_data,
             "date_range": date_range,
-            "post_count": len(posts_data),
+            "post_count": post_count,
             "story_count": len(stories_data),
+            "show_more_icon": post_count > len(posts_data),
         }
