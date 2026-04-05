@@ -94,6 +94,13 @@ class InstagramSiteGenerator:
 
     def _copy_static_assets(self):
         """Copy CSS and JS files to the output directory."""
+        # Copy images
+        image_dir = self.static_dir / "images"
+        if image_dir.exists():
+            for image_file in image_dir.glob("*"):
+                shutil.copy2(image_file, self.output_dir / "images" / image_file.name)
+                print(f"Copied image: {image_file.name}")
+
         # Copy CSS
         css_dir = self.static_dir / "css"
         if css_dir.exists():
@@ -163,6 +170,7 @@ class InstagramSiteGenerator:
             stories_data_json=json.dumps(stories_data, ensure_ascii=False),  # Add stories data
             generation_date=generation_date,
             gtag_id=self.gtag_id,  # Add Google tag ID
+            show_more_icon=self.data_package["show_more_icon"],
         )
 
         # Write HTML file

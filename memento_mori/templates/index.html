@@ -80,6 +80,11 @@
       </div>
       <div class="posts-grid" id="postsGrid">
         {{ grid_html|safe }}
+        {% if show_more_icon %}
+        <div class="grid-item" data-index="-1" style="pointer-events: none;">
+          <img src="images/more.svg" alt="show more icon">
+        </div>
+        {% endif %}
       </div>
     </main>
 
