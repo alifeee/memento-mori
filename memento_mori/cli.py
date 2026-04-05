@@ -83,6 +83,12 @@ def main():
         help="Google Analytics tag ID (e.g., 'G-DX1ZWTC9NZ') to add tracking to the generated site",
     )
     parser.add_argument(
+        "--custom-css",
+        nargs="+",
+        type=str,
+        help="Extra custom CSS files to link",
+    )
+    parser.add_argument(
         "--verbose", "-v",
         action="store_true",
         help="Enable verbose output for debugging",
@@ -199,7 +205,12 @@ def main():
 
         # Generate website with the loaded data
         print("\n🌐 GENERATING WEBSITE")
-        generator = InstagramSiteGenerator(data, output_dir, gtag_id=args.gtag_id)
+        generator = InstagramSiteGenerator(
+            data,
+            output_dir,
+            gtag_id=args.gtag_id,
+            custom_css=args.custom_css,
+        )
         success = generator.generate()
 
         if success:

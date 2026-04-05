@@ -28,3 +28,6 @@ comments-test/.env
 comments-test/instagram_cookies.json
 comments-test/runs/
 comments-test/
+
+# custom files
+custom.css

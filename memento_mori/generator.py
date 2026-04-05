@@ -21,11 +21,15 @@ class InstagramSiteGenerator:
     - Verifying the completeness of the output
     """
 
-    def __init__(self, data_package, output_dir, template_dir=None, static_dir=None, gtag_id=None):
+    def __init__(self, data_package, output_dir, template_dir=None, static_dir=None, gtag_id=None, custom_css=None):
         """Initialize the generator with data and path options."""
         self.data_package = data_package
         self.output_dir = Path(output_dir)
         self.gtag_id = gtag_id  # Store the Google tag ID
+        if custom_css is None:
+            self.custom_css = []
+        else:
+            self.custom_css = custom_css
 
         # Find template directory
         if template_dir is None:
@@ -107,6 +111,10 @@ class InstagramSiteGenerator:
             for css_file in css_dir.glob("*.css"):
                 shutil.copy2(css_file, self.output_dir / "css" / css_file.name)
                 print(f"Copied CSS: {css_file.name}")
+        # custom CSS
+        for css_file in self.custom_css:
+            shutil.copy2(css_file, self.output_dir / "css" / css_file.split("/")[-1])
+            print(f"Copied custom CSS: {css_file.split('/')[-1]}")
 
         # Copy JS
         js_dir = self.static_dir / "js"
@@ -171,6 +179,7 @@ class InstagramSiteGenerator:
             generation_date=generation_date,
             gtag_id=self.gtag_id,  # Add Google tag ID
             show_more_icon=self.data_package["show_more_icon"],
+            custom_css=[css.split("/")[-1] for css in self.custom_css],
         )
 
         # Write HTML file

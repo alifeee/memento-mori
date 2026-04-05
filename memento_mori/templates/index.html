@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Memento Mori - {{ username }}'s Instagram Archive</title>
     <link rel="stylesheet" href="css/style.css">
+    {% for css in custom_css %}
+    <link rel="stylesheet" href="css/{{css}}">
+    {% endfor %}
     {% if gtag_id %}
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ gtag_id }}"></script>
