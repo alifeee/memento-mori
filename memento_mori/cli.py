@@ -96,6 +96,12 @@ def main():
         help="Page title. [default: Memento Mori]",
     )
     parser.add_argument(
+        "--extra-bio-file",
+        type=str,
+        help="HTML file to include after bio. Default: None",
+    )
+
+    parser.add_argument(
         "--verbose", "-v",
         action="store_true",
         help="Enable verbose output for debugging",
@@ -218,6 +224,7 @@ def main():
             gtag_id=args.gtag_id,
             custom_css=args.custom_css,
             page_title=args.page_title,
+            extra_bio_file=args.extra_bio_file,
         )
         success = generator.generate()
 

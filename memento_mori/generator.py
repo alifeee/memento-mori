@@ -21,7 +21,7 @@ class InstagramSiteGenerator:
     - Verifying the completeness of the output
     """
 
-    def __init__(self, data_package, output_dir, template_dir=None, static_dir=None, gtag_id=None, custom_css=None, page_title=None):
+    def __init__(self, data_package, output_dir, template_dir=None, static_dir=None, gtag_id=None, custom_css=None, page_title=None, extra_bio_file=None):
         """Initialize the generator with data and path options."""
         self.data_package = data_package
         self.output_dir = Path(output_dir)
@@ -31,6 +31,7 @@ class InstagramSiteGenerator:
         else:
             self.custom_css = custom_css
         self.page_title = page_title
+        self.extra_bio_file = extra_bio_file
 
         # Find template directory
         if template_dir is None:
@@ -163,6 +164,12 @@ class InstagramSiteGenerator:
         # Get stories data or empty dict if not available
         stories_data = self.data_package.get("stories", {})
 
+        # get extra bio file, if any
+        extra_bio_html = None
+        if self.extra_bio_file:
+            with open(self.extra_bio_file, 'r', encoding="utf-8") as file:
+                extra_bio_html = file.read()
+
         # Render the main template
         template = self.jinja_env.get_template("index.html")
         html_content = template.render(
@@ -182,6 +189,7 @@ class InstagramSiteGenerator:
             show_more_icon=self.data_package["show_more_icon"],
             custom_css=[css.split("/")[-1] for css in self.custom_css],
             page_title = self.page_title,
+            extra_bio_html = extra_bio_html,
         )
 
         # Write HTML file

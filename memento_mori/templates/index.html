@@ -47,6 +47,9 @@
           {% if bio %}
           <p class="bio">{{ bio }}</p>
           {% endif %}
+          {% if extra_bio_html %}
+          <div class="extra-bio">{{ extra_bio_html|safe }}</div>
+          {% endif %}
           {% if profile.website %}
           <p class="website"><a href="{{ profile.website }}" target="_blank" rel="noopener noreferrer">{{ profile.website }}</a></p>
           {% endif %}
