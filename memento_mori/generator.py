@@ -21,7 +21,7 @@ class InstagramSiteGenerator:
     - Verifying the completeness of the output
     """
 
-    def __init__(self, data_package, output_dir, template_dir=None, static_dir=None, gtag_id=None, custom_css=None):
+    def __init__(self, data_package, output_dir, template_dir=None, static_dir=None, gtag_id=None, custom_css=None, page_title=None):
         """Initialize the generator with data and path options."""
         self.data_package = data_package
         self.output_dir = Path(output_dir)
@@ -30,6 +30,7 @@ class InstagramSiteGenerator:
             self.custom_css = []
         else:
             self.custom_css = custom_css
+        self.page_title = page_title
 
         # Find template directory
         if template_dir is None:
@@ -180,6 +181,7 @@ class InstagramSiteGenerator:
             gtag_id=self.gtag_id,  # Add Google tag ID
             show_more_icon=self.data_package["show_more_icon"],
             custom_css=[css.split("/")[-1] for css in self.custom_css],
+            page_title = self.page_title,
         )
 
         # Write HTML file

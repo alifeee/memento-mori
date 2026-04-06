@@ -82,11 +82,18 @@ def main():
         type=str,
         help="Google Analytics tag ID (e.g., 'G-DX1ZWTC9NZ') to add tracking to the generated site",
     )
+    # customisations
     parser.add_argument(
         "--custom-css",
         nargs="+",
         type=str,
         help="Extra custom CSS files to link",
+    )
+    parser.add_argument(
+        "--page-title",
+        type=str,
+        default="Memento Mori",
+        help="Page title. [default: Memento Mori]",
     )
     parser.add_argument(
         "--verbose", "-v",
@@ -210,6 +217,7 @@ def main():
             output_dir,
             gtag_id=args.gtag_id,
             custom_css=args.custom_css,
+            page_title=args.page_title,
         )
         success = generator.generate()
 
