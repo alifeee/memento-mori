@@ -63,8 +63,9 @@ main {
 }
 
 .profile-info {
-  display: flex;
+  display: grid;
   align-items: center;
+  grid-template-columns: auto 1fr;
   margin-bottom: 30px;
 }
 
@@ -136,6 +137,7 @@ main {
 }
 
 .grid-item img,
+.grid-item svg,
 .grid-item video {
   width: 100%;
   height: 100%;
