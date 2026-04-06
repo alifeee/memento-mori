@@ -56,7 +56,13 @@
           <div class="stats">
             <div class="stat">
               <a href="index.html" class="nav-link active">
-                <span class="stat-count" id="post-count">{{ post_count }}</span> posts
+                <span class="stat-count" id="post-count">
+                  {% if posts_visible == post_count %}
+                    {{ post_count }}
+                  {% else %}
+                    {{ posts_visible }} / {{ post_count }}
+                  {% endif %}
+                </span> posts
               </a>
             </div>
             {% if has_stories %}

@@ -179,6 +179,7 @@ class InstagramSiteGenerator:
             profile=profile_info,  # Pass the entire profile object
             date_range=date_range,
             post_count=post_count,
+            posts_visible=len(self.data_package["posts"]),
             story_count=story_count,
             has_stories=story_count > 0,  # Flag to show stories link
             grid_html=grid_html,
